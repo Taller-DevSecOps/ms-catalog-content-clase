@@ -4,7 +4,8 @@ name: Hola Mundo
 on:
   push:
   workflow_dispatch:
-
+  
+permissions: write-all
 
 jobs:
 
