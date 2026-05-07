@@ -1,4 +1,4 @@
-name: Hola Mundo
+name: CI
 
 
 on:
@@ -29,4 +29,32 @@ jobs:
         with:
           category: "/language:java-kotlin"
 
+  SCA:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build
+        run: |
+          mvn package
+
+      - name: Dependency Check
+        uses: dependency-check/Dependency-Check_Action@1.1.0
+        with:
+          project: 'ms-catalog-content'
+          path: '.'
+          format: 'HTML'
+          args: >
+            --disableCentral
+            
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v7.0.1
+        with: 
+          path: ${{github.workspace}}/reports
+      
+
+        
+          
       
