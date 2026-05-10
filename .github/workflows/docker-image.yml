@@ -21,7 +21,7 @@ jobs:
         shell: powershell
         working-directory: C:\Program Files\ZAP\Zed Attack Proxy
         run: |
-           & "C:\Program Files\ZAP\Zed Attack Proxy\zap.bat" -cmd -openapifile "swagger.yaml" -openapitargeturl "http://localhost:8080"  -quickout "C:\Users\clago\OneDrive\reporte113.html"
+           & "C:\Program Files\ZAP\Zed Attack Proxy\zap.bat" -cmd -openapifile "${{ github.workspace }}\swagger.yaml" -openapitargeturl "http://localhost:8080"  -quickout "C:\Users\clago\OneDrive\reporte113.html"
 
       
       
