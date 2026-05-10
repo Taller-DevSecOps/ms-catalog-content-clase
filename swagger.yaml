@@ -1,0 +1,122 @@
+openapi: 3.0.0
+info:
+  title: Ms-Catalog-Content API
+  description: DevSecOps Microservice - Catalog Content API with Preview and Product endpoints
+  version: 0.0.1
+  contact:
+    name: Taller-DevSecOps
+    url: https://github.com/Taller-DevSecOps/ms-catalog-content
+
+servers:
+  - url: http://localhost:8080
+    description: Local development server
+
+tags:
+  - name: Products
+    description: Product catalog endpoints
+  - name: Preview
+    description: Content preview endpoints
+
+paths:
+  /api/products:
+    get:
+      tags:
+        - Products
+      summary: Get product information
+      description: Retrieves product details by name with tracing capabilities
+      operationId: getProduct
+      parameters:
+        - name: name
+          in: query
+          description: Product name to lookup
+          required: false
+          schema:
+            type: string
+            default: keyboard
+          example: keyboard
+        - name: X-Client-Trace
+          in: header
+          description: Client trace identifier for request tracking
+          required: false
+          schema:
+            type: string
+            default: no-trace
+          example: trace-12345
+        - name: User-Agent
+          in: header
+          description: User agent string
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful product lookup
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  product:
+                    type: string
+                    description: The product name
+                    example: keyboard
+                  status:
+                    type: string
+                    description: Status of the request
+                    example: ok
+                  traceHeader:
+                    type: string
+                    description: Echo of the trace header sent
+                    example: trace-12345
+                  message:
+                    type: string
+                    description: Response message
+                    example: This endpoint is intentionally simple for classroom use.
+
+  /api/preview:
+    post:
+      tags:
+        - Preview
+      summary: Get content preview from URL
+      description: Fetches and returns a preview of content from a given URL
+      operationId: preview
+      requestBody:
+        description: Preview request with target URL
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PreviewRequest'
+      responses:
+        '200':
+          description: Successful preview retrieval
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  requestedUrl:
+                    type: string
+                    description: The URL that was requested
+                    example: https://example.com
+                  preview:
+                    type: string
+                    description: The content preview from the URL
+                    example: "<html>...</html>"
+        '400':
+          description: Invalid request
+        '500':
+          description: Failed to fetch preview
+
+components:
+  schemas:
+    PreviewRequest:
+      type: object
+      required:
+        - url
+      properties:
+        url:
+          type: string
+          description: URL to fetch preview from
+          example: https://example.com
+          format: uri
