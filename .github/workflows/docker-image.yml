@@ -11,48 +11,19 @@ jobs:
 
   SAST:
 
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
 
       - uses: actions/checkout@v4
 
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
-        with:
-          languages: java-kotlin
-          build-mode: none
-          queries: security-and-quality
-
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
-        with:
-          category: "/language:java-kotlin"
-
-  SCA:
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Build
+      - name: OWASP ZAP Scan
+        shell: powershell
+        working-directory: C:\Program Files\ZAP\Zed Attack Proxy
         run: |
-          mvn package
+           & "C:\Program Files\ZAP\Zed Attack Proxy\zap.bat" -cmd -openapifile "swagger.yaml" -openapitargeturl "http://localhost:8080"  -quickout "C:\Users\clago\OneDrive\reporte113.html"
 
-      - name: Dependency Check
-        uses: dependency-check/Dependency-Check_Action@1.1.0
-        with:
-          project: 'ms-catalog-content'
-          path: '.'
-          format: 'HTML'
-          args: >
-            --disableCentral
-            
-      - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v7.0.1
-        with: 
-          path: ${{github.workspace}}/reports
+      
       
 
         
