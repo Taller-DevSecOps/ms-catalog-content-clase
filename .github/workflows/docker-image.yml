@@ -67,6 +67,14 @@ jobs:
           username: ${{ secrets.USER_DOCKER }}
           password: ${{ secrets.PASS_DOCKER }}
 
+      - name: Docker build
+        run: |
+          docker build --tag clagosu/ms-catalog-content-clase:latest
+
+      - name: Docker push
+        run: |
+          docker push clagosu/ms-catalog-content-clase:latest
+
           
       
 
