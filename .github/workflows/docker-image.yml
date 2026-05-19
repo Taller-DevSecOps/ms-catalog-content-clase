@@ -71,6 +71,14 @@ jobs:
         run: |
           docker build --tag clagosu/ms-catalog-content-clase:latest .
 
+      - name: Aqua Security Trivy
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: 'clagosu/ms-catalog-content-clase:latest'
+          format: 'table'
+          exit-code: '1'
+          vuln-type: 'os,library'
+          
       - name: Docker push
         run: |
           docker push clagosu/ms-catalog-content-clase:latest
