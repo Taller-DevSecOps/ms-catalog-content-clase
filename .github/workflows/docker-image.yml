@@ -69,7 +69,7 @@ jobs:
 
       - name: Docker build
         run: |
-          docker build --tag clagosu/ms-catalog-content-clase:latest
+          docker build --tag clagosu/ms-catalog-content-clase:latest .
 
       - name: Docker push
         run: |
