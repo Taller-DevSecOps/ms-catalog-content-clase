@@ -95,7 +95,7 @@ jobs:
         uses: princespaghetti/setup-conftest@v1
 
       - name: Run Compliance test
-        run: conftest test deploy/deployment.yaml
+        run: conftest test deploy/deployment.yaml --policy k8s.rego
         
           
       
