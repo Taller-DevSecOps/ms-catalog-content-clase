@@ -84,8 +84,18 @@ jobs:
           docker push clagosu/ms-catalog-content-clase:latest
 
           
-      
+  Compliance:
+  
+    runs-on: ubuntu-latest
 
+    steps:
+      - uses: actions/checkout@v4    
+      
+      - name: Setup Conftest
+        uses: princespaghetti/setup-conftest@v1
+
+      - name: Run Compliance test
+        run: conftest test deploy/deployment.yaml
         
           
       
