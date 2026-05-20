@@ -1,0 +1,11 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-catalog-content
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - name: ms-catalog-content
+        image: clagosu/ms-catalog-content-clase:latest
